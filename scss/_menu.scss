@@ -1,0 +1,19 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px 60px 40px 60px;
+  justify-content: space-between;
+  background-color: $cor-menu-e-rodape;
+  align-items: center;
+}
+
+.flex a {
+  max-width: 80px;
+
+  font-size: $texto;
+  color: $cor-texto-menu-e-rodape;
+
+  font-family: $fonte-principal;
+
+  font-size: $subtitulo;
+}

@@ -1,0 +1,10 @@
+.rodape {
+  background-color: $cor-menu-e-rodape;
+  padding: 30px 60px 30px 60px;
+
+  p {
+    font-family: $fonte-principal;
+    color: $cor-texto-menu-e-rodape;
+    font-size: $subtitulo;
+  }
+}
