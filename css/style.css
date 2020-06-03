@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+ul,
+li,
+h1,
+h2,
+h3,
+blockquote,
+cite,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+blockquote,
+cite {
+  font-style: normal;
+}
+
+a {
+  font-style: normal;
+  text-decoration: none;
+}
+
+body {
+  background-color: #b8c9c1;
+}
+
+.grid-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px 60px 40px 60px;
+  justify-content: space-between;
+  background-color: #305c32;
+  align-items: center;
+}
+
+.flex a {
+  max-width: 80px;
+  font-size: 1.2rem;
+  color: #32c832;
+  font-family: Georgia, serif, monospace;
+  font-size: 1.5rem;
+}
+
+.arvores h1 {
+  margin-left: 60px;
+  margin-top: 60px;
+  color: #202f23;
+  font-size: 3rem;
+  font-family: Georgia, serif, monospace;
+}
+
+.arvores-container {
+  margin: 40px 60px 60px 60px;
+  display: grid;
+  grid-template-columns: 300px 700px;
+  grid-gap: 40px;
+  margin-left: 100px;
+}
+
+.arvores ul {
+  margin-left: 40px;
+}
+
+.arvores-imagens {
+  grid-column: 1;
+}
+
+.arvores-imagens img {
+  box-shadow: 0 0 2px 2px #202f23;
+}
+
+.arvores-imagens li {
+  margin-bottom: 40px;
+}
+
+.arvores-descricao {
+  grid-column: 2;
+  color: #202f23;
+}
+
+.arvores-descricao h2 {
+  font-family: Georgia, serif, monospace;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.arvores-descricao p {
+  font-family: "Times new Roman", times;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.arvores-descricao h3 {
+  font-family: "Times new Roman", times;
+  font-size: 1rem;
+  color: #202f23;
+  margin-bottom: 5px;
+}
+
+.arvores-descricao cite {
+  margin-left: 5px;
+  color: #202f23;
+  font-family: "Times new Roman", times;
+  font-size: 1rem;
+}
+
+.arvores-descricao a {
+  font-style: italic;
+  color: #202f23;
+}
+
+.arvores-descricao a:hover {
+  color: #32c832;
+}
+
+.arvores-descricao li {
+  margin-bottom: 40px;
+}
+
+.rodape {
+  background-color: #305c32;
+  padding: 30px 60px 30px 60px;
+}
+
+.rodape p {
+  font-family: Georgia, serif, monospace;
+  color: #32c832;
+  font-size: 1.5rem;
+}

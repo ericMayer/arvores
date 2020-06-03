@@ -1,0 +1,21 @@
+// Cores
+
+$cor-texto: #202f23;
+$cor-menu-e-rodape: #305c32;
+$cor-texto-menu-e-rodape: #32c832;
+$cor-fundo: #b8c9c1;
+
+// Font-family
+$fonte-principal: Georgia, serif, monospace;
+$fonte-secundaria: "Times new Roman", times;
+
+// Font-size
+
+$titulo: 3rem;
+$subtitulo: 1.5rem;
+$texto: 1.2rem;
+$referencia: 1rem;
+
+body {
+  background-color: $cor-fundo;
+}

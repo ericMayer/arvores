@@ -4,80 +4,40 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, srhink-to-fit=no"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
+
+    <link rel="shortcut icon" href="img/favicon.ico" />
 
     <link rel="stylesheet" href="css/style.css" />
     <title>Árvores</title>
   </head>
   <body>
-    <nav class="grid menu">
-      <ul>
-        <li><a href="#">Árvores</a></li>
-        <li><a href="sobre.html">Sobre</a></li>
-      </ul>
-    </nav>
+    <header class="flex">
+      <a href="#"><img src="img/arvore-menu.png" alt="Logo do site"></a>
 
-    <section class="grid arvores">
-      <h1>Tipos de Árvores</h1>
+      <nav class="menu">
+        <ul>
+          <li><a href="sobre.html">Sobre</a></li>
+        </ul>
+      </nav>
+    </header>
 
-      <ul class="arvores-imagens">
-        <li>
+    <section class="arvores">
+      <h1>Árvores</h1>
+
+      <div class="grid-section arvores-container">
+
+        <div class="arvores-imagens">
           <img
             src="img/Pata de Vaca (Bauhinia variegata).jpg"
             alt="Pata de Vaca (Bauhinia variegata)"
           />
-        </li>
-
-        <li>
-          <img
-            src="img/Quaresmeira (Tibouchina granulosa).jpg"
-            alt="Quaresmeira (Tibouchina granulosa)"
-          />
-        </li>
-
-        <li>
-          <img
-            src="img/Jacarandá de Minas (Jacaranda Cuspidifolia).jpg"
-            alt="
-            Jacarandá de Minas (Jacaranda Cuspidifolia)"
-          />
-        </li>
-
-        <li>
-          <img
-            src="img/Ipê-branco (Tabebuia roseo-alba).jpg"
-            alt="Ipê-branco (Tabebuia roseo-alba)"
-          />
-        </li>
-
-        <li>
-          <img
-            src="img/Ipê-amarelo (Tabebuia ochracea).jpg"
-            alt="Ipê-amarelo (Tabebuia ochracea)"
-          />
-        </li>
-
-        <li>
-          <img
-            src="img/Açoita-cavalo miúdo (Luehea divaricata).jpg"
-            alt="Açoita-cavalo miúdo (Luehea divaricata)"
-          />
-        </li>
-
-        <li>
-          <img
-            src="img/Jacarandá-paulista (Machaerium villosum).jpg"
-            alt="Jacarandá-paulista (Machaerium villosum)"
-          />
-        </li>
-      </ul>
-
-      <ul class="arvores-descricao">
-        <li>
+        </div>
+        <div class="arvores-descricao">
           <h2>Pata de Vaca (Bauhinia variegata)</h2>
           <p>
-            A pata-de-vaca (Bauhinia variegata) é uma árvore da família Fabaceae
+            é uma árvore da família Fabaceae
             - Caesalpinoideae, também conhecido como unha-de-vaca. Esta árvore é
             considerada de porte médio (vai de 5 a 9 metros de altura).
             Geralmente apresenta tronco tortuoso, com 30 a 40 centímetros de
@@ -97,12 +57,18 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
+        </div>
 
-        <li>
+        <div class="arvores-imagens">
+          <img
+            src="img/Quaresmeira (Tibouchina granulosa).jpg"
+            alt="Quaresmeira (Tibouchina granulosa)"
+          />
+        </div>
+        <div class="arvores-descricao">
           <h2>A quaresmeira (Tibouchina granulosa)</h2>
           <p>
-            A quaresmeira (Tibouchina granulosa) é uma árvore brasileira
+            é uma árvore brasileira
             pioneira, da Mata Atlântica, principalmente da floresta ombrófila
             densa da encosta atlântica.
           </p>
@@ -127,46 +93,20 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
-        <li>
-          <h2>Jacarandá de Minas (Jacaranda Cuspidifolia)</h2>
+        </div>
 
-          <p>
-            O Jacarandá cuspidifolia é uma espécie rústica, como a maioria das
-            espécies do Cerrado são. A espécie cresce rápido no Cerrado e lento
-            em outras regiões, de Mata Atlântica por exemplo. Não se adapta bem
-            a solos encharcados, mas no Cerrado mineiro, pega bem fácil e com
-            crescimento rápido, uma média de 1 a 2 metros por ano.
-          </p>
+        <div class="arvores-imagens">
+          <img
+            src="img/Ipê-branco (Tabebuia roseo-alba).jpg"
+            alt="Ipê-branco (Tabebuia roseo-alba)"
+          />
+        </div>
 
-          <p>
-            A planta não possui raízes agressivas, suas raízes não crescem para
-            os lados, sendo uma árvore ideal para arborização urbana, já que
-            suas raízes não danificam calçadas e não prejudicam a fiação
-            elétrica, por ter galhos espaçados. Sua altura é entre 8 a 10
-            metros, na fase adulta.
-          </p>
-
-          <blockquote>
-            <h3>Referência</h3>
-            <cite
-              >Conhecaminas - disponível em:
-              <a
-                href="https://www.conhecaminas.com/2019/09/conheca-o-jacaranda-de-minas.html"
-                target="_blank"
-              >
-                Conhecaminas</a
-              >
-              Acesso em 01 Junho de 2020.
-            </cite>
-          </blockquote>
-        </li>
-
-        <li>
+        <div class="arvores-descricao">
           <h2>Ipê-branco (Tabebuia roseo-alba)</h2>
 
           <p>
-            Ipê-branco (Tabebuia roseoalba) é uma árvore brasileira, descrita
+            é uma árvore brasileira, descrita
             inicialmente em 1890 como Bignonia roseo-alba.
           </p>
 
@@ -181,7 +121,7 @@
               >Wikipedia - disponível em:
               <a
                 href="
-                https://pt.wikipedia.org/wiki/Ip%C3%AA-branco"
+                  https://pt.wikipedia.org/wiki/Ip%C3%AA-branco"
                 target="_blank"
               >
                 Wikipedia</a
@@ -189,13 +129,20 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
+        </div>
 
-        <li>
+        <div class="arvores-imagens">
+          <img
+            src="img/Ipê-amarelo (Tabebuia ochracea).jpg"
+            alt="Ipê-amarelo (Tabebuia ochracea)"
+          />
+        </div>
+
+        <div class="arvores-descricao">
           <h2>Ipê-amarelo (Tabebuia ochracea)</h2>
 
           <p>
-            O Ipê-amarelo é uma das árvores nativas do Brasil mais conhecidas,
+            é uma das árvores nativas do Brasil mais conhecidas,
             considerada por muitos a mais bonita.
           </p>
           <p>
@@ -219,7 +166,7 @@
               >Vivadecora - disponível em:
               <a
                 href="
-                https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
+                  https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
                 target="_blank"
               >
                 Vivadecora</a
@@ -227,13 +174,19 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
+        </div>
 
-        <li>
+        <div class="arvores-imagens">
+          <img
+            src="img/Açoita-cavalo miúdo (Luehea divaricata).jpg"
+            alt="Açoita-cavalo miúdo (Luehea divaricata)"
+          />
+        </div>
+        <div class="arvores-descricao">
           <h2>Açoita-cavalo miúdo (Luehea divaricata)</h2>
 
           <p>
-            Essa espécie pode atingir 25 m de altura, sendo que o tamanho máximo
+            essa espécie pode atingir 25 m de altura, sendo que o tamanho máximo
             do tronco é de 60 cm.
           </p>
           <p>
@@ -255,7 +208,7 @@
               >Vivadecora - disponível em:
               <a
                 href="
-                https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
+                  https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
                 target="_blank"
               >
                 Vivadecora</a
@@ -263,13 +216,19 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
+        </div>
 
-        <li>
+        <div class="arvores-imagens">
+          <img
+            src="img/Jacarandá-paulista (Machaerium villosum).jpg"
+            alt="Jacarandá-paulista (Machaerium villosum)"
+          />
+        </div>
+        <div class="arvores-descricao">
           <h2>Jacarandá-paulista (Machaerium villosum)</h2>
 
           <p>
-            O Jacarandá é uma das árvores nativas brasileiras classificadas como
+            é uma das árvores nativas brasileiras classificadas como
             madeira de lei. Sua altura pode chegar a 30 m.
           </p>
           <p>
@@ -290,7 +249,7 @@
               >Vivadecora - disponível em:
               <a
                 href="
-                  https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
+                    https://www.vivadecora.com.br/pro/paisagismo/arvores-nativas/"
                 target="_blank"
               >
                 Vivadecora</a
@@ -298,13 +257,13 @@
               Acesso em 01 Junho de 2020.
             </cite>
           </blockquote>
-        </li>
-      </ul>
-    </section>
+        </div>
+      </section>
 
-    <footer>
-      <p>© Copyright</p>
-    </footer>
+      <footer class="rodape">
+        <p>© Copyright</p>
+      </footer>
+    </div>
 
     <script src="js/main.js"></script>
   </body>

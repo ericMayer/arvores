@@ -1,0 +1,78 @@
+.arvores h1 {
+  margin-left: 60px;
+  margin-top: 60px;
+  color: $cor-texto;
+  font-size: $titulo;
+  font-family: $fonte-principal;
+}
+
+.arvores-container {
+  margin: 40px 60px 60px 60px;
+  display: grid;
+  grid-template-columns: 300px 700px;
+  grid-gap: 40px;
+  margin-left: 100px;
+}
+
+.arvores ul {
+  margin-left: 40px;
+}
+
+.arvores-imagens {
+  grid-column: 1;
+}
+
+.arvores-imagens img {
+  box-shadow: 0 0 2px 2px $cor-texto;
+}
+
+.arvores-imagens li {
+  margin-bottom: 40px;
+}
+
+.arvores-descricao {
+  grid-column: 2;
+
+  color: $cor-texto;
+
+  h2 {
+    font-family: $fonte-principal;
+    font-size: $subtitulo;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-family: $fonte-secundaria;
+    font-size: $texto;
+    margin-bottom: 10px;
+  }
+}
+
+.arvores-descricao {
+  h3 {
+    font-family: $fonte-secundaria;
+    font-size: $referencia;
+    color: $cor-texto;
+    margin-bottom: 5px;
+  }
+
+  cite {
+    margin-left: 5px;
+    color: $cor-texto;
+    font-family: $fonte-secundaria;
+    font-size: $referencia;
+  }
+}
+
+.arvores-descricao a {
+  font-style: italic;
+  color: $cor-texto;
+
+  &:hover {
+    color: $cor-texto-menu-e-rodape;
+  }
+}
+
+.arvores-descricao li {
+  margin-bottom: 40px;
+}
