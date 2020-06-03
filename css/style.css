@@ -147,3 +147,37 @@ body {
   color: #32c832;
   font-size: 1.5rem;
 }
+
+.slide {
+  background-color: #202f23;
+  padding: 60px 0;
+}
+
+.slide-grid {
+  display: grid;
+  grid-template-columns: 30vw 1000px;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide-imagens {
+  grid-column: 2;
+  display: flex;
+  cursor: grab;
+}
+
+.slide-imagens li {
+  flex: 1 0 400px;
+  padding: 0 20px;
+  max-height: 220px;
+  opacity: 0.6;
+}
+
+.slide-imagens li img {
+  box-shadow: 0 0 6px 0 #32c832;
+}
+
+.slide-imagens li.ativo {
+  opacity: 1;
+}

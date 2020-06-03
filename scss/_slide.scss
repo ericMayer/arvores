@@ -1,0 +1,41 @@
+.slide {
+  background-color: #202f23;
+  padding: 60px 0;
+}
+
+.slide-grid {
+  display: grid;
+  grid-template-columns: 30vw 1000px;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden; // esconde tudo que estoura o container
+}
+
+.slide-imagens {
+  grid-column: 2;
+  display: flex;
+  cursor: grab;
+}
+
+.slide-imagens li {
+  flex: 1 0 400px;
+  padding: 0 20px;
+  max-height: 220px;
+
+  // transform: scale(0.8);
+
+  opacity: 0.6;
+}
+
+.slide-imagens li img {
+  // criando uma sombra borrada para diferenciar um pouco a imagem,
+  // não é possível aplicar uma sombra melhor
+  // porquê as imagens utilizadas, estão sendo
+  // forçadas a ficar do mesmo tamanho no css
+  box-shadow: 0 0 6px 0 $cor-texto-menu-e-rodape;
+}
+
+.slide-imagens li.ativo {
+  // transform: scale(1);
+  opacity: 1;
+}
