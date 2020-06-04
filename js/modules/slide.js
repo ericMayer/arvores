@@ -20,30 +20,61 @@ export default class Slide {
     // para não ser possível arrastar a imagem do mouse
     event.preventDefault();
 
-    // quando é realizado o primeiro click é armazenado
-    // a posição inicial
-    this.posicao.inicial = event.clientX;
+    // caso seja evento de mousedown
+    // ou com o touch, em ambos os casos
+    // será pego a posição do clique ou toque
+    // e adiciona o evento de move no mouse
+    // ou touch
+    if (event.type === "mousedown") {
+      // quando é realizado o primeiro click é armazenado
+      // a posição inicial
+      this.posicao.inicial = event.clientX;
 
-    // adicionando que está movendo o mouse
-    this.container.addEventListener("mousemove", this.move);
+      // adicionando que está movendo o mouse
+      this.container.addEventListener("mousemove", this.move);
+    } else if (event.type === "touchstart") {
+      // quando é realizado o primeiro click é armazenado
+      // a posição inicial
+      this.posicao.inicial = event.changedTouches[0].clientX;
+
+      // adicionando que está movendo o mouse
+      this.container.addEventListener("touchmove", this.move);
+    }
   }
 
   // método de quando está sendo movido o mouse após clicado
   move(event) {
-    // chamado método que atualiza
-    // o movimento e armazenando
-    // em uma variável
-    const posicao = this.atualizaPosicao(event.clientX);
+    // verifica se o evento é mousemove ou touchmove
+    // de acordo com isso é pegado a posição
+    // e atualizado movimentação do slide
+    if (event.type === "mousemove") {
+      // chamado método que atualiza
+      // o movimento e armazenando
+      // em uma variável
+      const posicao = this.atualizaPosicao(event.clientX);
 
-    // chamando método que irá mover o slide
-    this.moveSlide(posicao);
+      // chamando método que irá mover o slide
+      this.moveSlide(posicao);
+    } else if (event.type === "touchmove") {
+      // chamado método que atualiza
+      // o movimento e armazenando
+      // em uma variável
+      const posicao = this.atualizaPosicao(event.changedTouches[0].clientX);
+
+      // chamando método que irá mover o slide
+      this.moveSlide(posicao);
+    }
   }
 
   // método de quando é parado o clique do mouse
-  up() {
-    // removendo o evento de mousemove,
-    // pois já foi parado a movimentação do mouse
-    this.container.removeEventListener("mousemove", this.move);
+  up(event) {
+    // removendo o evento de mousemove ou touchmove,
+    // pois já foi finalizado o clique ou o toque
+    if (event.type === "mouseup") {
+      this.container.removeEventListener("mousemove", this.move);
+    } else if (event.type === "touchend") {
+      this.container.removeEventListener("touchmove", this.move);
+    }
 
     // adiciando a posição final quando for finalizado
     this.posicao.final = this.posicao.anterior;
@@ -84,9 +115,15 @@ export default class Slide {
     // adicionado evento quando é clicado com o mouse
     this.container.addEventListener("mousedown", this.click);
 
+    // adicionando evento de click com o touch
+    this.container.addEventListener("touchstart", this.click);
+
     // adicionado evento que verifica
     // se foi parado o clique
     this.container.addEventListener("mouseup", this.up);
+
+    // adicionado evento de fim do toque
+    this.container.addEventListener("touchend", this.up);
   }
 
   // alterando referências dos eventos
