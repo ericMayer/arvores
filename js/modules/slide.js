@@ -1,145 +1,112 @@
 export default class Slide {
-  constructor(slide, container) {
+  constructor(anterior, proximo, slide, container) {
+    this.anterior = document.querySelector(anterior);
+    this.proximo = document.querySelector(proximo);
     this.slide = document.querySelector(slide);
     this.container = document.querySelector(container);
+  }
 
-    // será armazenado a posição
-    // inicial do click
-    // o movimento realizado
-    // e a posição final
-    this.posicao = {
-      inicial: 0,
-      movimento: 0,
-      final: 0,
+  // pega a posição do slide, levando
+  // em conta a margem atual para que fique
+  // centralizado
+  posicao(item) {
+    const margem = (window.innerWidth - item.offsetWidth) / 2;
+
+    return margem - item.offsetLeft;
+  }
+
+  // cria uma lista com todos os itens
+  // do slide e as posições
+  listaSlide() {
+    this.array = [...this.slide.children].map((item) => {
+      return {
+        item,
+        position: this.posicao(item),
+      };
+    });
+  }
+
+  // atualiza posições de slide
+  // anterior, atual e próximo
+  // chama método para adicionar classe ativo
+  posicaoSlide(index) {
+    const ultimo = this.array.length - 1;
+    this.index = {
+      anterior: index ? index - 1 : undefined,
+      atual: index,
+      proximo: index === ultimo ? undefined : index + 1,
     };
+    this.addClassAtivo(index);
   }
 
-  // quando for clicado com o mouse
-  click(event) {
-    // prevenindo padrão
-    // para não ser possível arrastar a imagem do mouse
-    event.preventDefault();
+  // adiciona classe ativo no slide atual
+  addClassAtivo(index) {
+    this.array.forEach((element) => {
+      element.item.classList.remove("ativo");
+    });
+    this.array[index].item.classList.add("ativo");
+  }
 
-    // caso seja evento de mousedown
-    // ou com o touch, em ambos os casos
-    // será pego a posição do clique ou toque
-    // e adiciona o evento de move no mouse
-    // ou touch
-    if (event.type === "mousedown") {
-      // quando é realizado o primeiro click é armazenado
-      // a posição inicial
-      this.posicao.inicial = event.clientX;
+  // movimenta para o slide anterior
+  slideAnterior() {
+    const anterior = this.index.anterior;
 
-      // adicionando que está movendo o mouse
-      this.container.addEventListener("mousemove", this.move);
-    } else if (event.type === "touchstart") {
-      // quando é realizado o primeiro click é armazenado
-      // a posição inicial
-      this.posicao.inicial = event.changedTouches[0].clientX;
-
-      // adicionando que está movendo o mouse
-      this.container.addEventListener("touchmove", this.move);
+    if (anterior !== undefined) {
+      const posicao = this.array[anterior].position;
+      this.moverSlide(posicao, anterior);
+      // ativando transição que faz a troca do slide
+      this.transition(true);
     }
   }
 
-  // método de quando está sendo movido o mouse após clicado
-  move(event) {
-    // verifica se o evento é mousemove ou touchmove
-    // de acordo com isso é pegado a posição
-    // e atualizado movimentação do slide
-    if (event.type === "mousemove") {
-      // chamado método que atualiza
-      // o movimento e armazenando
-      // em uma variável
-      const posicao = this.atualizaPosicao(event.clientX);
+  // movimenta para o próximo slide
+  proximoSlide() {
+    const proximo = this.index.proximo;
 
-      // chamando método que irá mover o slide
-      this.moveSlide(posicao);
-    } else if (event.type === "touchmove") {
-      // chamado método que atualiza
-      // o movimento e armazenando
-      // em uma variável
-      const posicao = this.atualizaPosicao(event.changedTouches[0].clientX);
+    if (proximo !== undefined) {
+      const posicao = this.array[proximo].position;
+      this.moverSlide(posicao, proximo);
 
-      // chamando método que irá mover o slide
-      this.moveSlide(posicao);
+      // ativando transição que faz a troca do slide
+      this.transition(true);
     }
   }
 
-  // método de quando é parado o clique do mouse
-  up(event) {
-    // removendo o evento de mousemove ou touchmove,
-    // pois já foi finalizado o clique ou o toque
-    if (event.type === "mouseup") {
-      this.container.removeEventListener("mousemove", this.move);
-    } else if (event.type === "touchend") {
-      this.container.removeEventListener("touchmove", this.move);
-    }
-
-    // adiciando a posição final quando for finalizado
-    this.posicao.final = this.posicao.anterior;
+  // move slide de acordo com a posição passada
+  // atualização o index de próximo, atual e anterior
+  // e atualiza as posições do slide
+  moverSlide(posicao, index) {
+    this.posicaoSlide(index);
+    this.listaSlide();
+    this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
   }
 
-  // atualizando a posição do movimento
-  // em relação a posição inicial
-  // é retornado o movimento por final
-  atualizaPosicao(clientX) {
-    // subtraindo o movimento realizado
-    // da posição inicial, pois assim
-    // o valor fica negativo o slide
-    // se movimenta no sentido correto,
-    // caso fosse ao contrário o movimento do slide
-    // ficaria contrário ao natural
-    // multiplicando para ser mais rápido a movimentação
-    this.posicao.movimento = (this.posicao.inicial - clientX) * 1.4;
-
-    // pegando a posição final e diminuindo da posição do movimento
-    // para sempre que recomeçar o movimento,
-    // começar a partir da posição que foi
-    // foi finalizada o movimento
-    return this.posicao.final - this.posicao.movimento;
+  // alterando referência dos métodos
+  // de callback dos eventos
+  bind() {
+    this.slideAnterior = this.slideAnterior.bind(this);
+    this.proximoSlide = this.proximoSlide.bind(this);
   }
 
-  // método responsável
-  // por mover o slide
-  moveSlide(movimento) {
-    // movimentando o slide
-    this.slide.style.transform = `translate3d(${movimento}px, 0, 0)`;
-
-    // armazenando última posição
-    this.posicao.anterior = movimento;
+  // adiciona eventos de click nos botões
+  // anterior e próximo
+  addEvents() {
+    this.anterior.addEventListener("click", this.slideAnterior);
+    this.proximo.addEventListener("click", this.proximoSlide);
   }
 
-  // adiciona eventos iniciais
-  addEvent() {
-    // adicionado evento quando é clicado com o mouse
-    this.container.addEventListener("mousedown", this.click);
-
-    // adicionando evento de click com o touch
-    this.container.addEventListener("touchstart", this.click);
-
-    // adicionado evento que verifica
-    // se foi parado o clique
-    this.container.addEventListener("mouseup", this.up);
-
-    // adicionado evento de fim do toque
-    this.container.addEventListener("touchend", this.up);
-  }
-
-  // alterando referências dos eventos
-  // de callback para a referência da classe
-  bindEvents() {
-    this.click = this.click.bind(this);
-    this.move = this.move.bind(this);
-    this.up = this.up.bind(this);
-  }
-
-  // inicia eventos iniciais
-  // e retorna o this para caso
-  // quiser encadear métodos
   iniciar() {
-    this.bindEvents();
-    this.addEvent();
+    this.bind();
+
+    this.addEvents();
+
+    this.listaSlide();
+    this.posicaoSlide(0);
+
+    // quando inicia slide já movimenta o slide
+    // pela primeira vez para que fique ao centro
+    this.moverSlide(this.array[0].position, 0);
+
     return this;
   }
 }

@@ -154,15 +154,10 @@ body {
 }
 
 .slide-grid {
-  display: grid;
-  grid-template-columns: 30vw 1000px;
-  align-content: center;
-  justify-content: center;
   overflow: hidden;
 }
 
 .slide-imagens {
-  grid-column: 2;
   display: flex;
   cursor: grab;
 }
@@ -171,7 +166,7 @@ body {
   flex: 1 0 400px;
   padding: 0 20px;
   max-height: 220px;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 .slide-imagens li img {
@@ -180,4 +175,26 @@ body {
 
 .slide-imagens li.ativo {
   opacity: 1;
+}
+
+.slide-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.anterior,
+.proximo {
+  margin-right: 10px;
+  display: block;
+  padding: 10px;
+  border: solid 3px #b8c9c1;
+  border-radius: 4px;
+  background-color: #202f23;
+  color: #32c832;
+  font-size: 1.5rem;
+  font-style: bold;
+  font-family: Georgia, serif, monospace;
+  cursor: pointer;
 }
