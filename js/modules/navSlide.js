@@ -24,8 +24,7 @@ export default class NavSlide extends Slide {
   // passado no constructor
   // é iniciado o primeiro item da array como ativo
   // para ficar diferenciado dos outros itens
-  // e é eventlistener no window para
-  // saber toda vez que mudar de slide
+  // é chamado método que inicia os eventos
   criaNavegacao() {
     const nav = document.createElement("ul");
 
@@ -39,7 +38,7 @@ export default class NavSlide extends Slide {
 
     this.navArray[0].classList.add("ativo");
 
-    window.addEventListener("mudouSlide", this.slideAtivo);
+    this.navSlideEvents();
   }
 
   // remove a classe ativo
@@ -53,8 +52,36 @@ export default class NavSlide extends Slide {
     this.navArray[this.index.atual].classList.add("ativo");
   }
 
+  // faz um foreach em todos os itens do menu
+  // de navegação por bolinhas, daí
+  // é comparado se o item é igual ao event.path[1]
+  // que é a bolinha clicada, com isso
+  // é pego a posição do array que deseja movimentar
+  // e é ativado a função que movimenta
+  // o slide passando a posição e o index
+  mudaBolinha(event) {
+    this.navArray.forEach((item, index) => {
+      if (item === event.path[1]) {
+        const posicao = this.array[index].position;
+        this.moverSlide(posicao, index);
+      }
+    });
+  }
+
   // alterando referências dos métodos de callback
   bindNavSlide() {
     this.slideAtivo = this.slideAtivo.bind(this);
+    this.mudaBolinha = this.mudaBolinha.bind(this);
+  }
+
+  // adiciona eventos para verificar se mudou slide
+  // ou se foi clicado em alguma bolinha
+  // do menu de navegação dos slides
+  navSlideEvents() {
+    window.addEventListener("mudouSlide", this.slideAtivo);
+
+    this.navArray.forEach((item) => {
+      item.addEventListener("click", this.mudaBolinha);
+    });
   }
 }
