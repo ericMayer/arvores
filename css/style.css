@@ -177,7 +177,7 @@ body {
   opacity: 1;
 }
 
-.slide-nav {
+.slide-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,4 +197,29 @@ body {
   font-style: bold;
   font-family: Georgia, serif, monospace;
   cursor: pointer;
+}
+
+.slide-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.slide-nav li a {
+  display: block;
+  margin: 10px;
+  text-indent: -1999px;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background-color: #b8c9c1;
+}
+
+.slide-nav li a:hover {
+  background-color: #32c832;
+}
+
+.slide-nav li.ativo a {
+  background-color: #32c832;
 }

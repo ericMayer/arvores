@@ -4,6 +4,10 @@ export default class Slide {
     this.proximo = document.querySelector(proximo);
     this.slide = document.querySelector(slide);
     this.container = document.querySelector(container);
+
+    // evento que irá ocorrer toda vez que ocorrer
+    // uma mudança de slide
+    this.mudouSlide = new Event("mudouSlide");
   }
 
   // pega a posição do slide, levando
@@ -54,8 +58,6 @@ export default class Slide {
     if (anterior !== undefined) {
       const posicao = this.array[anterior].position;
       this.moverSlide(posicao, anterior);
-      // ativando transição que faz a troca do slide
-      this.transition(true);
     }
   }
 
@@ -66,19 +68,19 @@ export default class Slide {
     if (proximo !== undefined) {
       const posicao = this.array[proximo].position;
       this.moverSlide(posicao, proximo);
-
-      // ativando transição que faz a troca do slide
-      this.transition(true);
     }
   }
 
   // move slide de acordo com a posição passada
   // atualização o index de próximo, atual e anterior
   // e atualiza as posições do slide
+  // também é disparado o evento
+  // que indica que trocou de slide
   moverSlide(posicao, index) {
     this.posicaoSlide(index);
     this.listaSlide();
     this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
+    window.dispatchEvent(this.mudouSlide);
   }
 
   // alterando referência dos métodos
