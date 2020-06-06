@@ -14,19 +14,61 @@ export default class TouchSlide extends Slide {
   }
 
   clicouSlide(event) {
+    event.preventDefault();
     if (event.type === "mousedown") {
       this.click.inicial = event.clientX;
+      this.container.addEventListener("mousemove", this.movendoSlide);
     } else if (event.type === "touchstart") {
       this.click.inicial = event.changedTouches[0].clientX;
+      this.container.addEventListener("touchmove", this.movendoSlide);
     }
-    console.log(this.click.inicial);
+  }
+
+  calculaMovimento(clientX) {
+    const item = this.array[this.index.atual].item;
+    const margem = (window.innerWidth - item.offsetWidth) / 2;
+
+    return clientX - margem;
+  }
+
+  movendoSlide(event) {
+    const clientX =
+      event.type === "mousemove"
+        ? event.clientX
+        : event.changedTouches[0].clientX;
+
+    const posicao = this.calculaMovimento(clientX);
+
+    this.arrastandoSlide(posicao);
+  }
+
+  arrastandoSlide(posicao) {
+    this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
   }
 
   finalizouClick(event) {
     if (event.type === "mouseup") {
-      console.log(event.clientX);
+      this.click.final = event.clientX;
+      this.container.removeEventListener("mousemove", this.movendoSlide);
     } else if (event.type === "touchend") {
-      console.log(event.changedTouches[0].clientX);
+      this.click.final = event.changedTouches[0].clientX;
+      this.container.removeEventListener("touchmove", this.movendoSlide);
+    }
+
+    this.click.movido = this.click.inicial - this.click.final;
+    this.trocandoSlide();
+  }
+
+  trocandoSlide() {
+    console.log(this.click.movido);
+    if (this.click.movido > 120 && this.index.proximo !== undefined) {
+      this.proximoSlide();
+    } else if (this.click.movido < -120 && this.index.anterior !== undefined) {
+      this.slideAnterior();
+    } else {
+      const posicao = this.array[this.index.atual].position;
+      const index = this.index.atual;
+      this.moverSlide(posicao, index);
     }
   }
 
@@ -36,6 +78,7 @@ export default class TouchSlide extends Slide {
   bindTouchSlide() {
     this.clicouSlide = this.clicouSlide.bind(this);
     this.finalizouClick = this.finalizouClick.bind(this);
+    this.movendoSlide = this.movendoSlide.bind(this);
   }
 
   // adicionando eventos iniciais
