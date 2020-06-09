@@ -1,3 +1,5 @@
+import debounce from "./debounce.js";
+
 export default class Slide {
   constructor(anterior, proximo, slide, container) {
     this.anterior = document.querySelector(anterior);
@@ -21,7 +23,6 @@ export default class Slide {
   // centralizado
   posicao(item) {
     const margem = (window.innerWidth - item.offsetWidth) / 2;
-
     return margem - item.offsetLeft;
   }
 
@@ -30,7 +31,7 @@ export default class Slide {
   listaSlide() {
     this.array = [...this.slide.children].map((item) => {
       return {
-        item,
+        item: item,
         position: this.posicao(item),
       };
     });
@@ -55,6 +56,17 @@ export default class Slide {
       element.item.classList.remove("ativo");
     });
     this.array[index].item.classList.add("ativo");
+  }
+
+  // método que adiciona
+  // a transição do slide no item atual
+  // e remove de todos os outros
+  transicao() {
+    this.array.forEach((element) => {
+      element.item.style.transition = "";
+    });
+
+    this.array[this.index.atual].item.style.transition = ".3s";
   }
 
   // movimenta para o slide anterior
@@ -83,6 +95,9 @@ export default class Slide {
   // também é disparado o evento
   // que indica que trocou de slide
   moverSlide(posicao, index) {
+    // método que cria animação na troca de slides
+    this.transicao();
+
     this.posicaoSlide(index);
     this.listaSlide();
     this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
@@ -122,10 +137,9 @@ export default class Slide {
   // fazendo o cálculo da movimentação do slide
   // o método está incorreto, por isso é necessário correção
   calculaMovimento(clientX) {
-    const item = this.array[this.index.atual].item;
-    const margem = (window.innerWidth - item.offsetWidth) / 2;
+    this.click.movido = (this.click.inicial - clientX) * 1.4;
 
-    return clientX - margem;
+    return this.click.final - this.click.movido;
   }
 
   // pega a posição que está sendo movida
@@ -134,21 +148,22 @@ export default class Slide {
   // após isso é chamado o método
   // responsável por mudar o slide na tela
   movendoSlide(event) {
-    const clientX =
-      event.type === "mousemove"
-        ? event.clientX
-        : event.changedTouches[0].clientX;
-
-    if (clientX !== this.click.inicial) {
-      const posicao = this.calculaMovimento(clientX);
-
-      this.arrastandoSlide(clientX);
+    let clientX = 0;
+    if (event.type === "mousemove") {
+      clientX = event.clientX;
+    } else if (event.type === "touchmove") {
+      clientX = event.changedTouches[0].clientX;
     }
+
+    const posicao = this.calculaMovimento(clientX);
+
+    this.arrastandoSlide(posicao);
   }
 
   // atualiza o slide de acordo com
   // o que foi movido
   arrastandoSlide(posicao) {
+    this.click.salvo = posicao;
     this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
   }
 
@@ -166,8 +181,8 @@ export default class Slide {
       this.click.final = event.changedTouches[0].clientX;
       this.container.removeEventListener("touchmove", this.movendoSlide);
     }
+    this.click.final = this.click.salvo;
 
-    this.click.movido = this.click.inicial - this.click.final;
     this.trocandoSlide();
   }
 
@@ -188,6 +203,20 @@ export default class Slide {
     }
   }
 
+  // toda vez que ocorrer o resize
+  // será atualizado a lista slide
+  // com as posições dos elementos
+  // após isso, será movido o slide
+  // usando o index e a posição atual
+  resize() {
+    setTimeout(() => {
+      this.listaSlide();
+      const posicao = this.array[this.index.atual].position;
+      const index = this.index.atual;
+      this.moverSlide(posicao, index);
+    }, 1000);
+  }
+
   // alterando referência dos métodos
   // de callback
   // após isso é iniciado os eventos
@@ -195,6 +224,10 @@ export default class Slide {
     this.clicouSlide = this.clicouSlide.bind(this);
     this.finalizouClick = this.finalizouClick.bind(this);
     this.movendoSlide = this.movendoSlide.bind(this);
+
+    // chamando a função de debounce para não repetir
+    // o mesmo evento milhares de vezes
+    this.resize = debounce(this.resize.bind(this), 200);
   }
 
   // adicionando eventos iniciais
@@ -202,11 +235,14 @@ export default class Slide {
   // evento de touch,
   // evento que finaliza o click,
   // evento que finaliza o toque
+  // evento de resize
   addEventsTouch() {
     this.container.addEventListener("mousedown", this.clicouSlide);
-    this.container.addEventListener("touchstart", this.clicouSlide);
     this.container.addEventListener("mouseup", this.finalizouClick);
+    this.container.addEventListener("touchstart", this.clicouSlide);
     this.container.addEventListener("touchend", this.finalizouClick);
+
+    window.addEventListener("resize", this.resize);
   }
 
   // iniciando bind dos métodos de callback
@@ -214,18 +250,20 @@ export default class Slide {
   // também é iniciado métodos iniciais
   iniciar() {
     this.bind();
-
     this.addEvents();
+    this.bindTouchSlide();
+    this.addEventsTouch();
 
+    // pegando a lista de slides
+    // com imagem e posição
+    // também é pego os índices do slide
+    // anterior, atual e próximo, iniciado em 0
     this.listaSlide();
     this.posicaoSlide(0);
 
     // quando inicia slide já movimenta o slide
     // pela primeira vez para que fique ao centro
     this.moverSlide(this.array[0].position, 0);
-
-    this.bindTouchSlide();
-    this.addEventsTouch();
 
     return this;
   }
