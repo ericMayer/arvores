@@ -85,7 +85,7 @@ body {
 .arvores-container {
   margin: 40px 60px 60px 60px;
   display: grid;
-  grid-template-columns: 300px minmax(300px, 700px);
+  grid-template-columns: minmax(300px, 400px) minmax(300px, 700px);
   grid-gap: 40px;
   margin-left: 100px;
 }
