@@ -60,12 +60,12 @@ body {
   }
 }
 
-.flex a {
+.flex img {
   max-width: 80px;
-  font-size: 1.2rem;
-  color: #32c832;
-  font-family: Georgia, serif, monospace;
-  font-size: 1.5rem;
+}
+
+.menu img {
+  max-width: 60px;
 }
 
 .arvores h1 {
