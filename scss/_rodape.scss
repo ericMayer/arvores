@@ -7,4 +7,9 @@
     color: $cor-texto-menu-e-rodape;
     font-size: $subtitulo;
   }
+
+  @include d(s) {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }

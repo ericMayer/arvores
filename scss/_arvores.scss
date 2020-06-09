@@ -4,14 +4,25 @@
   color: $cor-texto;
   font-size: $titulo;
   font-family: $fonte-principal;
+
+  @include d(s) {
+    margin-left: 20px;
+    // text-align: center;
+  }
 }
 
 .arvores-container {
   margin: 40px 60px 60px 60px;
-  display: grid;
-  grid-template-columns: 300px 700px;
-  grid-gap: 40px;
+  @include grid-arvores;
   margin-left: 100px;
+
+  @include d(m) {
+    grid-template-columns: 1fr;
+  }
+
+  @include d(s) {
+    margin: 40px 20px 60px 20px;
+  }
 }
 
 .arvores ul {
@@ -20,10 +31,22 @@
 
 .arvores-imagens {
   grid-column: 1;
+
+  @include d(m) {
+    grid-column: 1 / -1;
+  }
 }
 
 .arvores-imagens img {
   box-shadow: 0 0 2px 2px $cor-texto;
+
+  @include d(m) {
+    max-width: 400px;
+  }
+
+  @include d(s) {
+    max-width: 300px;
+  }
 }
 
 .arvores-imagens li {
@@ -45,6 +68,10 @@
     font-family: $fonte-secundaria;
     font-size: $texto;
     margin-bottom: 10px;
+  }
+
+  @include d(m) {
+    grid-column: 1 / -1;
   }
 }
 

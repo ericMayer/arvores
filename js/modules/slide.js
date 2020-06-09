@@ -21,9 +21,18 @@ export default class Slide {
   // pega a posição do slide, levando
   // em conta a margem atual para que fique
   // centralizado
+  // pegado o tamanho total do windows diminuido
+  // pelo tamanho do slide e dividido por dois
+  // para ficar centralizado
+  // depois subtraído da distância da esquerda do item
+  // a esquerda da página
+  // e deixado como negativo, para ficar
+  // no sentido correto o slide
   posicao(item) {
     const margem = (window.innerWidth - item.offsetWidth) / 2;
-    return margem - item.offsetLeft;
+    // const margem = (this.container.offsetWidth - item.offsetWidth) / 2;
+
+    return -(item.offsetLeft - margem);
   }
 
   // cria uma lista com todos os itens

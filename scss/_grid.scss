@@ -7,3 +7,26 @@
 .grid-section {
   @include grid();
 }
+
+@mixin grid-arvores {
+  display: grid;
+  grid-template-columns: 300px minmax(300px, 700px);
+  grid-gap: 40px;
+}
+
+// variáves dos media queries
+$medium: 780px;
+$small: 540px;
+
+// mixin de responsivo que será usado no site
+@mixin d($size) {
+  @if $size == m {
+    @media only screen and (max-width: $medium) {
+      @content;
+    }
+  } @else if $size == s {
+    @media only screen and (max-width: $small) {
+      @content;
+    }
+  }
+}
