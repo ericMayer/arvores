@@ -1,4 +1,5 @@
 import NavSlide from "./modules/navSlide.js";
+import Tooltip from "./modules/tooltip.js";
 
 const slide = new NavSlide(
   '[data-slide="anterior"]',
@@ -10,3 +11,6 @@ const slide = new NavSlide(
 
 slide.iniciar();
 slide.criaNavegacao();
+
+const tooltip = new Tooltip('[data-tooltip="informacao"]');
+tooltip.iniciar();
