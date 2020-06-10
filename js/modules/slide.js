@@ -29,8 +29,9 @@ export default class Slide {
   // e deixado como negativo, para ficar
   // no sentido correto o slide
   posicao(item) {
-    const margem = (window.innerWidth - item.offsetWidth) / 2;
-    // const margem = (this.container.offsetWidth - item.offsetWidth) / 2;
+    // const margem = (window.innerWidth - item.offsetWidth) / 2;
+
+    const margem = (this.container.offsetWidth - item.offsetWidth) / 2;
 
     return -(item.offsetLeft - margem);
   }
@@ -143,14 +144,6 @@ export default class Slide {
     }
   }
 
-  // fazendo o cálculo da movimentação do slide
-  // o método está incorreto, por isso é necessário correção
-  calculaMovimento(clientX) {
-    this.click.movido = (this.click.inicial - clientX) * 1.4;
-
-    return this.click.final - this.click.movido;
-  }
-
   // pega a posição que está sendo movida
   // é chama o método responsável por fazer o cálculo
   // do quanto deve ser movido,
@@ -165,15 +158,9 @@ export default class Slide {
     }
 
     const posicao = this.calculaMovimento(clientX);
-
-    this.arrastandoSlide(posicao);
-  }
-
-  // atualiza o slide de acordo com
-  // o que foi movido
-  arrastandoSlide(posicao) {
-    this.click.salvo = posicao;
-    this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
+    if (this.click.inicial !== clientX) {
+      this.arrastandoSlide(posicao);
+    }
   }
 
   // após ser finalizado o evento de click
@@ -193,6 +180,21 @@ export default class Slide {
     this.click.final = this.click.salvo;
 
     this.trocandoSlide();
+  }
+
+  // fazendo o cálculo da movimentação do slide
+  // o método está incorreto, por isso é necessário correção
+  calculaMovimento(clientX) {
+    this.click.movido = (this.click.inicial - clientX) * 1.4;
+
+    return this.click.final - this.click.movido;
+  }
+
+  // atualiza o slide de acordo com
+  // o que foi movido
+  arrastandoSlide(posicao) {
+    this.click.salvo = posicao;
+    this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
   }
 
   // verificado o tamanho do movimento
