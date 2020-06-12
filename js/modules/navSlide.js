@@ -60,6 +60,12 @@ export default class NavSlide extends Slide {
   // e é ativado a função que movimenta
   // o slide passando a posição e o index
   mudaBolinha(event) {
+    // irá prevenir no mobile de ocorrer,
+    // os dois eventos click e touchstart
+    // ocorrendo apenas um, mesmo se não tiver
+    // o evento de touchstart ele ocorre automaticamente
+    // no navegador
+    event.preventDefault();
     this.navArray.forEach((item, index) => {
       if (item === event.path[1]) {
         const posicao = this.array[index].position;
@@ -82,6 +88,7 @@ export default class NavSlide extends Slide {
 
     this.navArray.forEach((item) => {
       item.addEventListener("click", this.mudaBolinha);
+      item.addEventListener("touchstart", this.mudaBolinha);
     });
   }
 }
