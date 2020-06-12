@@ -18,6 +18,76 @@ export default class Slide {
     };
   }
 
+  // ---------------------- Callback Events ----------------------------//
+
+  // evento que quando é clicado com o mouse
+  // ou com o touch
+  // é adicionado os eventos de mousemove
+  // e touchmove, também é pego a posição inicial
+  // onde foi clicado
+  clicouSlide(event) {
+    if (event.type === "mousedown") {
+      event.preventDefault();
+      this.click.inicial = event.clientX;
+      this.container.addEventListener("mousemove", this.movendoSlide);
+    } else if (event.type === "touchstart") {
+      this.click.inicial = event.changedTouches[0].clientX;
+      this.container.addEventListener("touchmove", this.movendoSlide);
+    }
+  }
+
+  // pega a posição que está sendo movida
+  // é chama o método responsável por fazer o cálculo
+  // do quanto deve ser movido,
+  // após isso é chamado o método
+  // responsável por mudar o slide na tela
+  movendoSlide(event) {
+    const clientX =
+      event.type === "mousemove"
+        ? event.clientX
+        : event.changedTouches[0].clientX;
+
+    const posicao = this.calculaMovimento(clientX);
+    // if (this.click.inicial !== clientX) {
+    this.arrastandoSlide(posicao);
+    // }
+  }
+
+  // após ser finalizado o evento de click
+  // ou touch e removido o evento
+  // e salvo o click final
+  // também é chamado o método que irá
+  // verificar qual troca de slide será
+  // necessária fazer
+  finalizouClick(event) {
+    if (event.type === "mouseup") {
+      this.container.removeEventListener("mousemove", this.movendoSlide);
+    } else if (event.type === "touchend") {
+      this.container.removeEventListener("touchmove", this.movendoSlide);
+    }
+    this.click.final = this.click.salvo;
+
+    this.trocandoSlide();
+  }
+
+  // toda vez que ocorrer o resize
+  // será atualizado a lista slide
+  // com as posições dos elementos
+  // após isso, será movido o slide
+  // usando o index e a posição atual
+  resize() {
+    setTimeout(() => {
+      this.listaSlide();
+      const posicao = this.array[this.index.atual].position;
+      const index = this.index.atual;
+      this.moverSlide(posicao, index);
+    }, 1000);
+  }
+
+  // ---------------------- End Callback Events ----------------------------//
+
+  // ---------------------- Lógica Slide -----------------------------------//
+
   // pega a posição do slide, levando
   // em conta a margem atual para que fique
   // centralizado
@@ -58,6 +128,7 @@ export default class Slide {
       proximo: index === ultimo ? undefined : index + 1,
     };
     this.addClassAtivo(index);
+    // return this.index;
   }
 
   // adiciona classe ativo no slide atual
@@ -66,17 +137,6 @@ export default class Slide {
       element.item.classList.remove("ativo");
     });
     this.array[index].item.classList.add("ativo");
-  }
-
-  // método que adiciona
-  // a transição do slide no item atual
-  // e remove de todos os outros
-  transicao() {
-    this.array.forEach((element) => {
-      element.item.style.transition = "";
-    });
-
-    this.array[this.index.atual].item.style.transition = ".3s";
   }
 
   // movimenta para o slide anterior
@@ -110,76 +170,19 @@ export default class Slide {
 
     this.posicaoSlide(index);
     this.listaSlide();
-    this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
+    // this.slide.style.transform = `translate3d(${posicao}px, 0, 0)`;
+    this.arrastandoSlide(posicao);
+
+    // atualizando a posição final
+    // onde foi movido o slide
+    // caso isso não seja feito,
+    // quando for fazer a troca do slide irá pegar
+    // a posição inicial é voltará para o começo,
+    // atualizando a posição a navegação do slide
+    // irá continuar sem problemas
+    this.click.final = posicao;
+
     window.dispatchEvent(this.mudouSlide);
-  }
-
-  // alterando referência dos métodos
-  // de callback dos eventos
-  bind() {
-    this.slideAnterior = this.slideAnterior.bind(this);
-    this.proximoSlide = this.proximoSlide.bind(this);
-  }
-
-  // adiciona eventos de click nos botões
-  // anterior e próximo
-  addEvents() {
-    this.anterior.addEventListener("click", this.slideAnterior);
-    this.proximo.addEventListener("click", this.proximoSlide);
-  }
-
-  // evento que quando é clicado com o mouse
-  // ou com o touch
-  // é adicionado os eventos de mousemove
-  // e touchmove, também é pego a posição inicial
-  // onde foi clicado
-  clicouSlide(event) {
-    event.preventDefault();
-    if (event.type === "mousedown") {
-      this.click.inicial = event.clientX;
-      this.container.addEventListener("mousemove", this.movendoSlide);
-    } else if (event.type === "touchstart") {
-      this.click.inicial = event.changedTouches[0].clientX;
-      this.container.addEventListener("touchmove", this.movendoSlide);
-    }
-  }
-
-  // pega a posição que está sendo movida
-  // é chama o método responsável por fazer o cálculo
-  // do quanto deve ser movido,
-  // após isso é chamado o método
-  // responsável por mudar o slide na tela
-  movendoSlide(event) {
-    let clientX = 0;
-    if (event.type === "mousemove") {
-      clientX = event.clientX;
-    } else if (event.type === "touchmove") {
-      clientX = event.changedTouches[0].clientX;
-    }
-
-    const posicao = this.calculaMovimento(clientX);
-    if (this.click.inicial !== clientX) {
-      this.arrastandoSlide(posicao);
-    }
-  }
-
-  // após ser finalizado o evento de click
-  // ou touch e removido o evento
-  // e salvo o click final
-  // também é chamado o método que irá
-  // verificar qual troca de slide será
-  // necessária fazer
-  finalizouClick(event) {
-    if (event.type === "mouseup") {
-      this.click.final = event.clientX;
-      this.container.removeEventListener("mousemove", this.movendoSlide);
-    } else if (event.type === "touchend") {
-      this.click.final = event.changedTouches[0].clientX;
-      this.container.removeEventListener("touchmove", this.movendoSlide);
-    }
-    this.click.final = this.click.salvo;
-
-    this.trocandoSlide();
   }
 
   // fazendo o cálculo da movimentação do slide
@@ -203,9 +206,9 @@ export default class Slide {
   // caso não tiver sido feita uma movimentação
   // significativa, será mantido o slide atual
   trocandoSlide() {
-    if (this.click.movido > 120 && this.index.proximo !== undefined) {
+    if (this.click.movido > 150 && this.index.proximo !== undefined) {
       this.proximoSlide();
-    } else if (this.click.movido < -120 && this.index.anterior !== undefined) {
+    } else if (this.click.movido < -150 && this.index.anterior !== undefined) {
       this.slideAnterior();
     } else {
       const posicao = this.array[this.index.atual].position;
@@ -214,18 +217,35 @@ export default class Slide {
     }
   }
 
-  // toda vez que ocorrer o resize
-  // será atualizado a lista slide
-  // com as posições dos elementos
-  // após isso, será movido o slide
-  // usando o index e a posição atual
-  resize() {
-    setTimeout(() => {
-      this.listaSlide();
-      const posicao = this.array[this.index.atual].position;
-      const index = this.index.atual;
-      this.moverSlide(posicao, index);
-    }, 1000);
+  // ---------------------- Fim Lógica Slide -----------------------//
+
+  // -------------------- Efeitos Slide ----------------------------//
+
+  // método que adiciona
+  // a transição do slide no item atual
+  // e remove de todos os outros
+  transicao() {
+    this.array.forEach((element) => {
+      element.item.style.transition = "";
+    });
+
+    this.array[this.index.atual].item.style.transition = ".3s";
+  }
+
+  // ----------------- Fim Efeitos Slide ----------------------------//
+
+  // alterando referência dos métodos
+  // de callback dos eventos
+  bind() {
+    this.slideAnterior = this.slideAnterior.bind(this);
+    this.proximoSlide = this.proximoSlide.bind(this);
+  }
+
+  // adiciona eventos de click nos botões
+  // anterior e próximo
+  addEvents() {
+    this.anterior.addEventListener("click", this.slideAnterior);
+    this.proximo.addEventListener("click", this.proximoSlide);
   }
 
   // alterando referência dos métodos
@@ -261,8 +281,8 @@ export default class Slide {
   // também é iniciado métodos iniciais
   iniciar() {
     this.bind();
-    this.addEvents();
     this.bindTouchSlide();
+    this.addEvents();
     this.addEventsTouch();
 
     // pegando a lista de slides

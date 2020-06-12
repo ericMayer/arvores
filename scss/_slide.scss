@@ -4,15 +4,10 @@
 }
 
 .slide-grid {
-  // display: grid;
-  // grid-template-columns: 30vw 1000px;
-  // align-content: center;
-  // justify-content: center;
   overflow: hidden; // esconde tudo que estoura o container
 }
 
 .slide-imagens {
-  // grid-column: 2;
   display: flex;
   cursor: grab;
 }
