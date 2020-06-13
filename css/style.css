@@ -189,6 +189,8 @@ body {
 .rodape {
   background-color: #305c32;
   padding: 30px 60px 30px 60px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .rodape p {
