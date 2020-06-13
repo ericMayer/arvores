@@ -131,14 +131,6 @@ export default class Slide {
     // return this.index;
   }
 
-  // adiciona classe ativo no slide atual
-  addClassAtivo(index) {
-    this.array.forEach((element) => {
-      element.item.classList.remove("ativo");
-    });
-    this.array[index].item.classList.add("ativo");
-  }
-
   // movimenta para o slide anterior
   slideAnterior() {
     const anterior = this.index.anterior;
@@ -220,6 +212,14 @@ export default class Slide {
   // ---------------------- Fim Lógica Slide -----------------------//
 
   // -------------------- Efeitos Slide ----------------------------//
+
+  // adiciona classe ativo no slide atual
+  addClassAtivo(index) {
+    this.array.forEach((element) => {
+      element.item.classList.remove("ativo");
+    });
+    this.array[index].item.classList.add("ativo");
+  }
 
   // método que adiciona
   // a transição do slide no item atual
