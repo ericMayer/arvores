@@ -1,7 +1,8 @@
 .rodape {
   background-color: $cor-menu-e-rodape;
   padding: 30px 60px 30px 60px;
-
+  display: flex;
+  justify-content: space-between;
   p {
     font-family: $fonte-principal;
     color: $cor-texto-menu-e-rodape;
