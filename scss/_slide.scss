@@ -1,10 +1,37 @@
 .slide {
-  background-color: #202f23;
+  background-color: $cor-texto;
   padding: 60px 0;
 }
 
-.slide-grid {
+.js .slide-grid {
   overflow: hidden; // esconde tudo que estoura o container
+}
+
+@mixin scrollbar() {
+  // tamanho da scrollbar
+  &::-webkit-scrollbar {
+    height: 18px;
+    width: 18px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /* rolagem usada na scroolbar */
+    background-color: $cor-texto-menu-e-rodape;
+    border-left: 4px solid $cor-texto;
+    border-right: 4px solid $cor-texto;
+  }
+
+  &::-webkit-scrollbar-track {
+    /* cor de fundo da scroolbar */
+    background-color: $cor-texto;
+  }
+}
+
+.slide-grid {
+  overflow-y: hidden;
+  overflow-x: scroll;
+
+  @include scrollbar;
 }
 
 .slide-imagens {
@@ -19,12 +46,15 @@
 
   // transform: scale(0.8);
   // transform: translate3d(-990px, 0, 0);
-  opacity: 0.4;
 
   @include d(s) {
     max-width: 280px;
     max-height: 150px;
   }
+}
+
+.js .slide-imagens li {
+  opacity: 0.4;
 }
 
 .slide-imagens li img {
@@ -60,4 +90,11 @@
   font-style: bold;
   font-family: $fonte-principal;
   cursor: pointer;
+
+  // quando estiver desabilitado
+  // não será clicável e a color será a de fundo
+  &:disabled {
+    color: $cor-fundo;
+    cursor: not-allowed;
+  }
 }
