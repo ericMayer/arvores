@@ -174,6 +174,11 @@ export default class Slide {
     // irá continuar sem problemas
     this.click.final = posicao;
 
+    // toda vez que alterar slide
+    // irá verificar se precisa desabilitar
+    // botão de próximo ou anterior
+    this.desabilitaBotao();
+
     window.dispatchEvent(this.mudouSlide);
   }
 
@@ -230,6 +235,58 @@ export default class Slide {
     });
 
     this.array[this.index.atual].item.style.transition = ".3s";
+  }
+
+  // método onde irá fazer a troca do slide automática
+  // a cada dez segundos, é pego o último slide
+  // que têm e criado um contador, que será somado +=1
+  // toda vez que trocar de slide
+  // quando esse contador for igual ao último slide
+  // irá mover para o primeiro slide e zerar
+  // o contador
+  trocaAutomatica() {
+    const ultimo = this.array.length - 1;
+    let contador = 0;
+    setInterval(() => {
+      if (contador !== ultimo) {
+        this.proximoSlide();
+        contador++;
+      } else {
+        this.moverSlide(this.array[0].position, 0);
+        contador = 0;
+      }
+    }, 10000);
+  }
+
+  // chamado métodos que desabilitam
+  // os botões de próximo e anterior
+  desabilitaBotao() {
+    this.desabilitaAnterior();
+    this.desabilitaProximo();
+  }
+
+  // caso não tiver nenhum anterior
+  // slide, desabilita o botão de anterior,
+  // caso tiver remove o atributo
+  // é habilita o botão
+  desabilitaAnterior() {
+    if (this.index.anterior === undefined) {
+      this.anterior.setAttribute("disabled", "");
+    } else {
+      this.anterior.removeAttribute("disabled");
+    }
+  }
+
+  // caso não tiver nenhum próximo
+  // slide, desabilita o botão de próximo,
+  // caso tiver remove o atributo
+  // é habilita o botão
+  desabilitaProximo() {
+    if (this.index.proximo === undefined) {
+      this.proximo.setAttribute("disabled", "");
+    } else {
+      this.proximo.removeAttribute("disabled");
+    }
   }
 
   // ----------------- Fim Efeitos Slide ----------------------------//
@@ -295,6 +352,9 @@ export default class Slide {
     // quando inicia slide já movimenta o slide
     // pela primeira vez para que fique ao centro
     this.moverSlide(this.array[0].position, 0);
+
+    // colocando a troca do slide automática
+    this.trocaAutomatica();
 
     return this;
   }
